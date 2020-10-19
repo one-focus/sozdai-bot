@@ -12,10 +12,17 @@ keyboard1.row('Привет', 'Пока')
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
-    subprocess.run("brew cask install chromedriver", shell=True)
-    driver = webdriver.Chrome("/usr/local/bin/chromedriver")
+    from selenium import webdriver
+    import os
+
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--no-sandbox")
+    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
     driver.get("https://google.com")
-    bot.send_message(message.chat.id, 'chrome installed')
+    bot.send_message(message.chat.id, driver.title)
     # driver.save_screenshot("screen.png")
 
 @bot.message_handler(content_types=['text'])
