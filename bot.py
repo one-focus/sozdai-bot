@@ -23,9 +23,7 @@ def start_message(message):
     bot.send_message(message.chat.id, "2")
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
     driver.get("https://google.com")
-    bot.send_message(message.chat.id, driver.title)
-    driver.save_screenshot("screen.png")
-    bot.send_photo(message.chat.id, "screen.png")
+    bot.send_message(message.chat.id, driver.get_screenshot_as_png())
 
 
 @bot.message_handler(content_types=['text'])
