@@ -47,7 +47,10 @@ def send_screenshot(message):
     chrome_options.add_argument("--no-sandbox")
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
     driver.get(url)
-    driver.find_element_by_class_name('popup-appCloseIcon').click()
+    try:
+        driver.find_element_by_class_name('popup-appCloseIcon').click()
+    except Exception:
+        pass
     bot.send_photo(message.chat.id, driver.get_screenshot_as_png())
     bot.send_message(message.chat.id, "https://algeria.blsspainvisa.com/english/book_appointment.php")
 
