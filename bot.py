@@ -24,7 +24,7 @@ def start_message(message):
     subprocess.run("alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'", shell=True)
     subprocess.run("chrome --headless --disable-gpu --screenshot https://www.chromestatus.com/", shell=True)
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
-    bot.send_message(message.chat.id, "3")
+    bot.send_photo(message.chat.id, "screenshot.png")
     driver.get("https://google.com")
 
     bot.send_message(message.chat.id, driver.title)
