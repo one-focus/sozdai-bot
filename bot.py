@@ -43,10 +43,11 @@ def send_screenshot(message):
     chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--window-size=1920,1080")
     chrome_options.add_argument("--no-sandbox")
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
     driver.get(url)
-    driver.find_element_by_class_name('popup-appCloseIcon').click()
+    driver.execute_scriptfind_element_by_class_name('popup-appCloseIcon').click()
     bot.send_photo(message.chat.id, driver.get_screenshot_as_png())
     bot.send_message(message.chat.id, "https://algeria.blsspainvisa.com/english/book_appointment.php")
 
