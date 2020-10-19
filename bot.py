@@ -24,6 +24,7 @@ def start_message(message):
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
     bot.send_message(message.chat.id, "3")
     driver.get("https://google.com")
+
     bot.send_message(message.chat.id, driver.title)
     # driver.save_screenshot("screen.png")
 
