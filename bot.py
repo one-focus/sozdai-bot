@@ -9,7 +9,8 @@ import os
 bot = telebot.TeleBot('1234408699:AAEbP0lO7h3BV3XK0Ug1qzc9jPR8_DGtoUI')
 keyboard1 = telebot.types.ReplyKeyboardMarkup()
 keyboard1.row('Привет', 'Пока')
-url='https://algeria.blsspainvisa.com/english/book_appointment.php'
+url = 'https://algeria.blsspainvisa.com/english/book_appointment.php'
+
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
@@ -46,6 +47,7 @@ def send_screenshot(message):
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
     driver.get(url)
     bot.send_photo(message.chat.id, driver.get_screenshot_as_png())
+    bot.send_message(message.chat.id, "https://algeria.blsspainvisa.com/english/book_appointment.php")
 
 
 bot.polling(none_stop=True)
