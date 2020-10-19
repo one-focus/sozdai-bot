@@ -14,13 +14,15 @@ keyboard1.row('Привет', 'Пока')
 def start_message(message):
     from selenium import webdriver
     import os
-
+    bot.send_message(message.chat.id, "1")
     chrome_options = webdriver.ChromeOptions()
     chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
     chrome_options.add_argument("--headless")
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--no-sandbox")
+    bot.send_message(message.chat.id, "2")
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+    bot.send_message(message.chat.id, "3")
     driver.get("https://google.com")
     bot.send_message(message.chat.id, driver.title)
     # driver.save_screenshot("screen.png")
