@@ -14,7 +14,7 @@ def start_message(message):
         r = requests.get("https://algeria.blsspainvisa.com/english/book_appointment.php")
         if "Appointment dates are not available." in r.content:
             time.sleep(60)
-            print("no appointments")
+            bot.send_message(message.chat.id, 'No appointmetns')
         else:
             bot.send_message(message.chat.id,
                              'Доступны аппоинтменты: https://algeria.blsspainvisa.com/english/book_appointment.php')
