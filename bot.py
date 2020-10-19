@@ -21,12 +21,15 @@ def start_message(message):
     chrome_options.add_argument("--disable-dev-shm-usage")
     chrome_options.add_argument("--no-sandbox")
     bot.send_message(message.chat.id, "2")
+    subprocess.run("alias chrome='/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome'", shell=True)
+    subprocess.run("chrome --headless --disable-gpu --screenshot https://www.chromestatus.com/", shell=True)
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
     bot.send_message(message.chat.id, "3")
     driver.get("https://google.com")
 
     bot.send_message(message.chat.id, driver.title)
     # driver.save_screenshot("screen.png")
+
 
 @bot.message_handler(content_types=['text'])
 def send_text(message):
