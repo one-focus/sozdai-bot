@@ -1,7 +1,9 @@
+import subprocess
 import time
 
 import requests
 import telebot
+from selenium import webdriver
 
 bot = telebot.TeleBot('1234408699:AAEbP0lO7h3BV3XK0Ug1qzc9jPR8_DGtoUI')
 keyboard1 = telebot.types.ReplyKeyboardMarkup()
@@ -10,15 +12,11 @@ keyboard1.row('Привет', 'Пока')
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
-    while True:
-        r = requests.get("https://algeria.blsspainvisa.com/english/book_appointment.php")
-        if "Appointment dates are not available." in r.content:
-            time.sleep(60)
-            bot.send_message(message.chat.id, 'No appointmetns')
-        else:
-            bot.send_message(message.chat.id,
-                             'Доступны аппоинтменты: https://algeria.blsspainvisa.com/english/book_appointment.php')
-
+    subprocess.run("brew cask install chromedriver", shell=True)
+    bot.send_message(message.chat.id, 'chrome installed')
+    # driver = webdriver.Chrome("/usr/local/bin/chromedriver")
+    # driver.get("https://google.com")
+    # driver.save_screenshot("screen.png")
 
 @bot.message_handler(content_types=['text'])
 def send_text(message):
@@ -26,8 +24,7 @@ def send_text(message):
         bot.send_message(message.chat.id, 'Привет, мой создатель')
         while True:
             r = requests.get("https://algeria.blsspainvisa.com/english/book_appointment.php")
-            if "Appointment dates are not available." in r.content:
-                bot.send_message(message.chat.id, 'No appointmetns')
+            if "Appointment dates are not available." in str(r.content):
                 time.sleep(60)
             else:
                 bot.send_message(message.chat.id,
