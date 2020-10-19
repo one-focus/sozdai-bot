@@ -1,3 +1,6 @@
+import time
+
+import requests
 import telebot
 
 bot = telebot.TeleBot('1234408699:AAEbP0lO7h3BV3XK0Ug1qzc9jPR8_DGtoUI')
@@ -7,7 +10,13 @@ keyboard1.row('Привет', 'Пока')
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
-    bot.send_message(message.chat.id, 'Привет, ты написал мне /start', reply_markup=keyboard1)
+    while True:
+        r = requests.get("https://algeria.blsspainvisa.com/english/book_appointment.php")
+        if "Appointment dates are not available." in r.content:
+            time.sleep(60)
+        else:
+            bot.send_message(message.chat.id, 'Доступны аппоинтменты: https://algeria.blsspainvisa.com/english/book_appointment.php')
+
 
 
 @bot.message_handler(content_types=['text'])
@@ -25,4 +34,4 @@ def sticker_id(message):
     print(message)
 
 
-bot.polling()
+bot.polling(none_stop=True)
