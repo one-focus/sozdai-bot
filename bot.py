@@ -24,6 +24,14 @@ def start_message(message):
 def send_text(message):
     if message.text.lower() == 'привет':
         bot.send_message(message.chat.id, 'Привет, мой создатель')
+        while True:
+            r = requests.get("https://algeria.blsspainvisa.com/english/book_appointment.php")
+            if "Appointment dates are not available." in r.content:
+                time.sleep(60)
+                bot.send_message(message.chat.id, 'No appointmetns')
+            else:
+                bot.send_message(message.chat.id,
+                                 'Доступны аппоинтменты: https://algeria.blsspainvisa.com/english/book_appointment.php')
     elif message.text.lower() == 'пока':
         bot.send_message(message.chat.id, 'Прощай, создатель')
     elif message.text.lower() == 'я тебя люблю':
