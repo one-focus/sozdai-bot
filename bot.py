@@ -13,9 +13,9 @@ keyboard1.row('Привет', 'Пока')
 @bot.message_handler(commands=['start'])
 def start_message(message):
     subprocess.run("brew cask install chromedriver", shell=True)
+    driver = webdriver.Chrome("/usr/local/bin/chromedriver")
+    driver.get("https://google.com")
     bot.send_message(message.chat.id, 'chrome installed')
-    # driver = webdriver.Chrome("/usr/local/bin/chromedriver")
-    # driver.get("https://google.com")
     # driver.save_screenshot("screen.png")
 
 @bot.message_handler(content_types=['text'])
