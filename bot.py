@@ -4,11 +4,12 @@ import time
 import requests
 import telebot
 from selenium import webdriver
+import os
 
 bot = telebot.TeleBot('1234408699:AAEbP0lO7h3BV3XK0Ug1qzc9jPR8_DGtoUI')
 keyboard1 = telebot.types.ReplyKeyboardMarkup()
 keyboard1.row('Привет', 'Пока')
-
+url='https://algeria.blsspainvisa.com/english/book_appointment.php'
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
@@ -20,7 +21,7 @@ def send_text(message):
     if message.text.lower() == 'привет':
         bot.send_message(message.chat.id, 'Привет, мой создатель')
         while True:
-            r = requests.get("https://algeria.blsspainvisa.com/english/book_appointment.php")
+            r = requests.get(url)
             if "Appointment dates are not available." in str(r.content):
                 time.sleep(60)
             else:
@@ -37,8 +38,6 @@ def sticker_id(message):
 
 
 def send_screenshot(message):
-    from selenium import webdriver
-    import os
     bot.send_message(message.chat.id, "1")
     chrome_options = webdriver.ChromeOptions()
     chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
@@ -47,7 +46,7 @@ def send_screenshot(message):
     chrome_options.add_argument("--no-sandbox")
     bot.send_message(message.chat.id, "2")
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
-    driver.get("https://google.com")
+    driver.get(url)
     bot.send_photo(message.chat.id, driver.get_screenshot_as_png())
 
 
