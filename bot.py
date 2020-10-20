@@ -26,6 +26,7 @@ def send_text(message):
             if "Appointment dates are not available." in str(r.content):
                 time.sleep(60)
             else:
+                bot.send_message(message.chat.id, f'Cообщение не найдено: {str(r.content)}')
                 send_screenshot(message)
     elif message.text.lower() == 'пока':
         bot.send_message(message.chat.id, 'Прощай, создатель')
