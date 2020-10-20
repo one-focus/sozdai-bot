@@ -25,7 +25,6 @@ def send_text(message):
             r = requests.get(url)
             if "Appointment dates are not available." in str(r.content):
                 time.sleep(60)
-                bot.send_message(message.chat.id, 'Привет, мой создатель')
             else:
                 bot.send_message(message.chat.id, f'Cообщение не найдено: {str(r.content)}')
                 send_screenshot(message)
