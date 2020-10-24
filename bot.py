@@ -6,10 +6,13 @@ import telebot
 from selenium import webdriver
 import os
 
+from telegram import InlineKeyboardButton
+
 bot = telebot.TeleBot('1234408699:AAEbP0lO7h3BV3XK0Ug1qzc9jPR8_DGtoUI')
 keyboard1 = telebot.types.ReplyKeyboardMarkup()
 keyboard1.row('Привет', 'Пока')
 url = 'https://algeria.blsspainvisa.com/english/book_appointment.php'
+url_button = InlineKeyboardButton(text="Перейти на Яндекс", url=url)
 
 
 @bot.message_handler(commands=['start'])
@@ -53,7 +56,8 @@ def send_screenshot(message):
     except Exception:
         pass
     bot.send_photo(message.chat.id, driver.get_screenshot_as_png())
-    bot.send_message(message.chat.id, "https://algeria.blsspainvisa.com/english/book_appointment.php")
+    bot.send_message(message.chat.id, "https://algeria.blsspainvisa.com/english/book_appointment.php",
+                     reply_markup=url_button)
 
 
 bot.polling(none_stop=True)
