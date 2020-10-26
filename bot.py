@@ -49,12 +49,13 @@ def get_trains(url):
         '//div[@class="sch-table__body js-sort-body"]//div[@class="sch-table__train-type"]/span[@class="sch-table__route-type"]/text()')
     departures = ra_html.xpath(
         '//div[@class="sch-table__body js-sort-body"]//div[@class="sch-table__time train-from-time"]/text()')
-    result = ""
+    result = f'{title[0]} {date[0]}\n'
     lenght = len(departures) if len(departures) < 3 else 3
-    for i in range(lenght):
-        result += f'{title} {date}\n{departures[i]} {types[i][:3]}\n'
+    if not lenght:
+        result += 'Нет поездов'
     else:
-        result = f'{title} {date}\nНет поездов'
+        for i in range(lenght):
+            result += f'{departures[i]} {types[i][:3]}\n'
     return result
 
 
