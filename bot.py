@@ -53,6 +53,8 @@ def get_trains(url):
     lenght = len(departures) if len(departures) < 3 else 3
     for i in range(lenght):
         result += f'{title} {date}\n{departures[i]} {types[i][:3]}\n'
+    else:
+        result = f'{title} {date}\nНет поездов'
     return result
 
 
