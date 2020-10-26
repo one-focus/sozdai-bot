@@ -50,7 +50,7 @@ def get_trains(url):
         '//div[@class="sch-table__body js-sort-body"]//div[@class="sch-table__time train-from-time"]/text()')
     result = ""
     lenght = len(departures) if len(departures) < 3 else 3
-    if lenght == 0:
+    if len(departures) == 0:
         return 'нет поездов'
     else:
         for i in range(lenght):
