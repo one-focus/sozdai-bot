@@ -72,6 +72,7 @@ def send_screenshot(message):
     chrome_options.add_argument("--window-size=1024,768")
     chrome_options.add_argument("--no-sandbox")
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+    driver.implicitly_wait(120)
     driver.get(url)
     try:
         driver.find_element_by_class_name('popup-appCloseIcon').click()
