@@ -30,28 +30,32 @@ def send_text(message):
                 send_screenshot(message)
     elif message.text.lower() == 'пока':
         bot.send_message(message.chat.id, 'Прощай, создатель')
-    elif message.text.lower() in ('минск', 'ратомка'):
-        if message.text.lower == 'минск':
-            ra = requests.get(
-            "https://pass.rw.by/ru/route/?from=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA-%D0%A1%D0%B5%D0%B2%D0%B5%D1%80%D0%BD%D1%8B%D0%B9&from_exp=2100450&from_esr=140102&to=%D0%A0%D0%B0%D1%82%D0%BE%D0%BC%D0%BA%D0%B0&to_exp=&to_esr=&front_date=%D1%81%D0%B5%D0%B3%D0%BE%D0%B4%D0%BD%D1%8F&date=today")
-        else:
-            ra = requests.get(
-                "https://pass.rw.by/ru/route/?from=%D0%A0%D0%B0%D1%82%D0%BE%D0%BC%D0%BA%D0%B0&from_exp=&from_esr=&to=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA-%D0%A1%D0%B5%D0%B2%D0%B5%D1%80%D0%BD%D1%8B%D0%B9&to_exp=2100450&to_esr=140102&front_date=%D1%81%D0%B5%D0%B3%D0%BE%D0%B4%D0%BD%D1%8F&date=today")
-        ra_html = html.fromstring(ra.content)
-        types = ra_html.xpath(
-            '//div[@class="sch-table__body js-sort-body"]//div[@class="sch-table__train-type"]/span[@class="sch-table__route-type"]/text()')
-        departures = ra_html.xpath(
-            '//div[@class="sch-table__body js-sort-body"]//div[@class="sch-table__time train-from-time"]/text()')
-        result = ""
-        lenght = len(departures) if len(departures) < 3 else 3
-        if lenght == 0:
-            bot.send_message(message.chat.id, 'нет электричек')
-        else:
-            for i in range(lenght):
-                result += f'{departures[i]} {types[i][:3]}\n'
-            bot.send_message(message.chat.id, result)
+    elif message.text.lower() == 'минск':
+        bot.send_message(get_trains(
+            "https://pass.rw.by/ru/route/?from=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA-%D0%A1%D0%B5%D0%B2%D0%B5%D1%80%D0%BD%D1%8B%D0%B9&from_exp=2100450&from_esr=140102&to=%D0%A0%D0%B0%D1%82%D0%BE%D0%BC%D0%BA%D0%B0&to_exp=&to_esr=&front_date=%D1%81%D0%B5%D0%B3%D0%BE%D0%B4%D0%BD%D1%8F&date=today"))
+    elif message.text.lower() == 'ратомка':
+        bot.send_message(get_trains(
+            "https://pass.rw.by/ru/route/?from=%D0%A0%D0%B0%D1%82%D0%BE%D0%BC%D0%BA%D0%B0&from_exp=&from_esr=&to=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA-%D0%A1%D0%B5%D0%B2%D0%B5%D1%80%D0%BD%D1%8B%D0%B9&to_exp=2100450&to_esr=140102&front_date=%D1%81%D0%B5%D0%B3%D0%BE%D0%B4%D0%BD%D1%8F&date=today"))
     elif message.text.lower() == 'я тебя люблю':
         bot.send_sticker(message.chat.id, 'CAADAgADZgkAAnlc4gmfCor5YbYYRAI')
+
+
+def get_trains(url):
+    ra = requests.get(url)
+    ra_html = html.fromstring(ra.content)
+    title = ra_html.xpath('//div[@class="sch-title"]/text()')
+    types = ra_html.xpath(
+        '//div[@class="sch-table__body js-sort-body"]//div[@class="sch-table__train-type"]/span[@class="sch-table__route-type"]/text()')
+    departures = ra_html.xpath(
+        '//div[@class="sch-table__body js-sort-body"]//div[@class="sch-table__time train-from-time"]/text()')
+    result = ""
+    lenght = len(departures) if len(departures) < 3 else 3
+    if lenght == 0:
+        return 'нет поездов'
+    else:
+        for i in range(lenght):
+            result += f'{title}\n{departures[i]} {types[i][:3]}\n'
+        return result
 
 
 @bot.message_handler(content_types=['sticker'])
