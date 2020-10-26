@@ -43,7 +43,7 @@ def send_text(message):
 def get_trains(url):
     ra = requests.get(url)
     ra_html = html.fromstring(ra.content)
-    title = ra_html.xpath('//div[@class="sch-sch-title__title h2"]/text()')
+    title = ra_html.xpath('//div[@class="sch-title__title h2"]/text()')
     date = ra_html.xpath('//div[@class="sch-title__date h3"]/text()')
     types = ra_html.xpath(
         '//div[@class="sch-table__body js-sort-body"]//div[@class="sch-table__train-type"]/span[@class="sch-table__route-type"]/text()')
