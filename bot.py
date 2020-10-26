@@ -50,12 +50,9 @@ def get_trains(url):
         '//div[@class="sch-table__body js-sort-body"]//div[@class="sch-table__time train-from-time"]/text()')
     result = ""
     lenght = len(departures) if len(departures) < 3 else 3
-    if len(departures) == 0:
-        return 'нет поездов'
-    else:
-        for i in range(lenght):
-            result += f'{title}\n{departures[i]} {types[i][:3]}\n'
-        return result
+    for i in range(lenght):
+        result += f'{title}\n{departures[i]} {types[i][:3]}\n'
+    return result
 
 
 @bot.message_handler(content_types=['sticker'])
