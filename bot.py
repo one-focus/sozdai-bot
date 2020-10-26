@@ -78,7 +78,7 @@ def send_screenshot(message):
         driver.find_element_by_class_name('popup-appCloseIcon').click()
     except Exception:
         pass
-    bot.send_photo(message.chat.id, driver.get_screenshot_as_png(), reply_markup=InlineKeyboardButton("Option 1", callback_data='1'))
+    bot.send_photo(message.chat.id, driver.get_screenshot_as_png())
     bot.send_message(message.chat.id, "https://algeria.blsspainvisa.com/english/book_appointment.php")
 
 
