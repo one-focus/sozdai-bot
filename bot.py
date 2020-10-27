@@ -48,6 +48,14 @@ def inline(c):
         key.add(but_1, but_2, but_3)
         bot.edit_message_text(chat_id=c.message.chat.id, text="Направление", message_id=c.message.message_id,
                               reply_markup=key)
+    elif c.data == 'minsk':
+        res = trains.get_trains(
+            "https://pass.rw.by/ru/route/?from=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA-%D0%A1%D0%B5%D0%B2%D0%B5%D1%80%D0%BD%D1%8B%D0%B9&from_exp=2100450&from_esr=140102&to=%D0%A0%D0%B0%D1%82%D0%BE%D0%BC%D0%BA%D0%B0&to_exp=&to_esr=&front_date=%D1%81%D0%B5%D0%B3%D0%BE%D0%B4%D0%BD%D1%8F&date=today")
+        bot.edit_message_text(chat_id=c.message.chat.id, text=res, message_id=c.message.message_id)
+    elif c.data == 'ratomka':
+        res = trains.get_trains(
+            "https://pass.rw.by/ru/route/?from=%D0%A0%D0%B0%D1%82%D0%BE%D0%BC%D0%BA%D0%B0&from_exp=&from_esr=&to=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA-%D0%A1%D0%B5%D0%B2%D0%B5%D1%80%D0%BD%D1%8B%D0%B9&to_exp=2100450&to_esr=140102&front_date=%D1%81%D0%B5%D0%B3%D0%BE%D0%B4%D0%BD%D1%8F&date=today")
+        bot.send_message(c.message.chat.id, res)
     elif c.data == 'screen':
         keyboard = types.InlineKeyboardMarkup()
         link_button = types.InlineKeyboardButton(text="Сайт",
@@ -57,14 +65,6 @@ def inline(c):
     elif c.data == 'back_to_main':
         bot.edit_message_text(chat_id=c.message.chat.id, text="Чего угодно?", message_id=c.message.message_id,
                               reply_markup=main_menu_buttons())
-    elif c.data == 'minsk':
-        res = trains.get_trains(
-            "https://pass.rw.by/ru/route/?from=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA-%D0%A1%D0%B5%D0%B2%D0%B5%D1%80%D0%BD%D1%8B%D0%B9&from_exp=2100450&from_esr=140102&to=%D0%A0%D0%B0%D1%82%D0%BE%D0%BC%D0%BA%D0%B0&to_exp=&to_esr=&front_date=%D1%81%D0%B5%D0%B3%D0%BE%D0%B4%D0%BD%D1%8F&date=today")
-        bot.edit_message_text(chat_id=c.message.chat.id, text=res, message_id=c.message.message_id)
-    elif c.data == 'ratomka':
-        res = trains.get_trains(
-            "https://pass.rw.by/ru/route/?from=%D0%A0%D0%B0%D1%82%D0%BE%D0%BC%D0%BA%D0%B0&from_exp=&from_esr=&to=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA-%D0%A1%D0%B5%D0%B2%D0%B5%D1%80%D0%BD%D1%8B%D0%B9&to_exp=2100450&to_esr=140102&front_date=%D1%81%D0%B5%D0%B3%D0%BE%D0%B4%D0%BD%D1%8F&date=today")
-        bot.send_message(c.message.chat.id, res)
 
 
 if __name__ == '__main__':
