@@ -13,6 +13,10 @@ def inline(message):
     bot.send_message(message.chat.id, "Чего угодно?")
     bot.send_message(message.chat.id, "Чего угодно?", reply_markup=main_menu_buttons())
 
+@bot.message_handler(commands=["stop"])
+def stop(message):
+    bot.stop_bot()
+
 
 def main_menu_buttons():
     key = types.InlineKeyboardMarkup()
