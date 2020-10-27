@@ -47,12 +47,16 @@ def send_text(message):
 def get_trains(url):
     ra = requests.get(url)
     ra_html = html.fromstring(ra.content)
+    print(f'ra_html:{ra_html}')
     title = ra_html.xpath('//div[@class="sch-title__title h2"]/text()')
+    print(f'title:{title}')
     date = ra_html.xpath('//div[@class="sch-title__date h3"]/text()')
+    print(f'date:{date}')
     types = ra_html.xpath(
         '//div[@class="sch-table__body js-sort-body"]//div[@class="sch-table__train-type"]/span[@class="sch-table__route-type"]/text()')
     departures = ra_html.xpath(
         '//div[@class="sch-table__body js-sort-body"]//div[@class="sch-table__time train-from-time"]/text()')
+    print(f'departures:{departures}')
     lenght = len(departures) if len(departures) < 3 else 3
     result = ''
     for i in range(lenght):
