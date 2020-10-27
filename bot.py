@@ -26,7 +26,7 @@ def main_menu_buttons():
 @bot.callback_query_handler(func=lambda c: True)
 def inline(c):
     if c.data == 'visa':
-        bot.send_message(c.message.chat.id, 'Мониторинг виз запущен')
+        bot.send_message(c.message.chat.id, 'Мониторинг виз запущен🟩')
         # progress = "🟩"
         # while True:
         #     screenshot = visa.monitor()
