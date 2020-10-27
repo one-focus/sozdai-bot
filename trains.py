@@ -13,5 +13,5 @@ def get_trains(url):
     lenght = len(departures) if len(departures) < 3 else 3
     result = f'{title[0]} {date[0]}\n'
     for i in range(lenght):
-        result += f'{departures[i]} {types[i][:3]}\n'
+        result += f'{"🔴" if types[i][0].lower() == "r" else "🔷"} {departures[i]}\n'
     return result
