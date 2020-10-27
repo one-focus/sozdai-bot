@@ -25,11 +25,13 @@ def main_menu_buttons():
 @bot.callback_query_handler(func=lambda c: True)
 def inline(c):
     if c.data == 'visa':
-        bot.send_message(c.message.chat.id, 'Привет, мой создатель')
+        bot.send_message(c.message.chat.id, 'Мониторинг виз запущен')
+        progress = "🟩"
         while True:
             screenshot = visa.monitor()
             if not screenshot:
-                time.sleep(6000)
+                progress = "🟩" if len(progress) > 10 else progress = f"{progress}🟩"
+                bot.edit_message_text(chat_id=c.message.chat.id, text=progress, message_id=c.message.message_id)
             else:
                 link_button = types.InlineKeyboardButton(text="Сайт", url=visa.URL)
                 bot.send_photo(c.message.chat.id, visa.monitor(), reply_markup=link_button)
