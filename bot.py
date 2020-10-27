@@ -30,7 +30,7 @@ def inline(c):
             if not screenshot:
                 prog = "◽"
                 for i in range(3600):
-                    if len(prog) > 3:
+                    if len(prog) > 2:
                         prog = "◽"
                     else:
                         prog = f"{prog}◽"
