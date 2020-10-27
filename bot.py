@@ -10,7 +10,6 @@ bot = telebot.TeleBot("1275523107:AAF_5t_r80J55Pl-JcVeLcVVOsl7kadqAc4")
 
 @bot.message_handler(commands=["start"])
 def inline(message):
-    bot.send_message(message.chat.id, "Чего угодно?")
     bot.send_message(message.chat.id, "Чего угодно?", reply_markup=main_menu_buttons())
 
 @bot.message_handler(commands=["stop"])
@@ -38,8 +37,8 @@ def inline(c):
                     prog = "◽"
                 else:
                     prog = f"{prog}◽"
-                bot.edit_message_text(chat_id=c.message.chat.id, text=prog, message_id=c.message.message_id)
-                time.sleep(1)
+                bot.edit_message_text(chat_id=c.message.chat.id, text=f'Мониторинг дат:\n{prog}', message_id=c.message.message_id)
+                time.sleep(10)
             else:
                 link_button = types.InlineKeyboardButton(text="Сайт", url=visa.URL)
                 bot.send_photo(c.message.chat.id, visa.monitor(), reply_markup=link_button)
