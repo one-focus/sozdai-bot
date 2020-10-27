@@ -28,9 +28,7 @@ def inline(c):
     if c.data == 'visa':
         prog = "◽"
         while True:
-            bot.send_message(c.message.chat.id, "1")
             screenshot = visa.monitor()
-            bot.send_message(c.message.chat.id, "2")
             if not screenshot:
                 if len(prog) > 10:
                     prog = "◽"
