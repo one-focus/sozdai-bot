@@ -17,7 +17,7 @@ def main_menu_buttons():
     key = types.InlineKeyboardMarkup()
     but_1 = types.InlineKeyboardButton(text="Виза", callback_data="visa")
     but_2 = types.InlineKeyboardButton(text="Поезда", callback_data="trains")
-    but_3 = types.InlineKeyboardButton(text="NumberTree", callback_data="screen")
+    but_3 = types.InlineKeyboardButton(text="Скриншот", callback_data="screen")
     key.add(but_1, but_2, but_3)
     return key
 
@@ -43,16 +43,12 @@ def inline(c):
         bot.edit_message_text(chat_id=c.message.chat.id, text="Направление", message_id=c.message.message_id,
                               reply_markup=key)
     elif c.data == 'screen':
-        link_button = types.InlineKeyboardButton(text="Сайт", url=visa.URL)
+        link_button = types.InlineKeyboardButton(text="Сайт",
+                                                 url='https://algeria.blsspainvisa.com/english/book_appointment.php')
         bot.send_photo(c.message.chat.id, visa.send_screenshot(), reply_markup=link_button)
     elif c.data == 'back_to_main':
-        key = types.InlineKeyboardMarkup()
-        but_1 = types.InlineKeyboardButton(text="NumberOne", callback_data="NumberOne")
-        but_2 = types.InlineKeyboardButton(text="Поезда", callback_data="Поезда")
-        but_3 = types.InlineKeyboardButton(text="NumberTree", callback_data="NumberTree")
-        key.add(but_1, but_2, but_3)
         bot.edit_message_text(chat_id=c.message.chat.id, text="Чего угодно?", message_id=c.message.message_id,
-                              reply_markup=key)
+                              reply_markup=main_menu_buttons())
     elif c.data == 'minsk':
         res = trains.get_trains(
             "https://pass.rw.by/ru/route/?from=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA-%D0%A1%D0%B5%D0%B2%D0%B5%D1%80%D0%BD%D1%8B%D0%B9&from_exp=2100450&from_esr=140102&to=%D0%A0%D0%B0%D1%82%D0%BE%D0%BC%D0%BA%D0%B0&to_exp=&to_esr=&front_date=%D1%81%D0%B5%D0%B3%D0%BE%D0%B4%D0%BD%D1%8F&date=today")
