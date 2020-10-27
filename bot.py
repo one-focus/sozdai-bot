@@ -49,10 +49,11 @@ def inline(c):
         bot.edit_message_text(chat_id=c.message.chat.id, text="Направление", message_id=c.message.message_id,
                               reply_markup=key)
     elif c.data == 'screen':
+        keyboard = types.InlineKeyboardMarkup()
         link_button = types.InlineKeyboardButton(text="Сайт",
                                                  url='https://algeria.blsspainvisa.com/english/book_appointment.php')
-        bot.send_photo(c.message.chat.id, visa.send_screenshot())
-        bot.send_message(c.message.chat.id, text="Сайт", reply_markup=link_button)
+        keyboard.add(link_button)
+        bot.send_photo(c.message.chat.id, visa.send_screenshot(), reply_markup=keyboard)
     elif c.data == 'back_to_main':
         bot.edit_message_text(chat_id=c.message.chat.id, text="Чего угодно?", message_id=c.message.message_id,
                               reply_markup=main_menu_buttons())
