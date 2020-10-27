@@ -32,6 +32,7 @@ def inline(c):
             if not screenshot:
                 progress = "🟩" if len(progress) > 10 else progress = f"{progress}🟩"
                 bot.edit_message_text(chat_id=c.message.chat.id, text=progress, message_id=c.message.message_id)
+                time.sleep(10)
             else:
                 link_button = types.InlineKeyboardButton(text="Сайт", url=visa.URL)
                 bot.send_photo(c.message.chat.id, visa.monitor(), reply_markup=link_button)
