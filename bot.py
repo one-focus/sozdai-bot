@@ -5,6 +5,7 @@ import requests
 import telebot
 from selenium import webdriver
 import os
+from datetime import date
 
 bot = telebot.TeleBot('1234408699:AAEbP0lO7h3BV3XK0Ug1qzc9jPR8_DGtoUI')
 keyboard1 = telebot.types.ReplyKeyboardMarkup()
@@ -24,7 +25,8 @@ def send_text(message):
         while True:
             r = requests.get(url)
             if "Appointment dates are not available." in str(r.content):
-                time.sleep(60)
+                bot.send_message(message.chat.id, str(date.today()))
+                time.sleep(6000)
             else:
                 bot.send_message(message.chat.id, f'Cообщение не найдено: {str(r.content)}')
                 send_screenshot(message)
