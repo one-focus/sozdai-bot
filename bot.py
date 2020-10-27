@@ -29,9 +29,14 @@ def inline(c):
         bot.send_message(c.message.chat.id, 'Мониторинг виз запущен')
         prog = "◽"
         while True:
+            bot.send_message(c.message.chat.id, "1")
             screenshot = visa.monitor()
+            bot.send_message(c.message.chat.id, "2")
             if not screenshot:
-                prog = "◽" if len(prog) > 10 else prog = f"{prog}◽"
+                if len(prog) > 10:
+                    prog = "◽"
+                else:
+                    prog = f"{prog}◽"
                 bot.edit_message_text(chat_id=c.message.chat.id, text=prog, message_id=c.message.message_id)
                 time.sleep(10)
             else:
