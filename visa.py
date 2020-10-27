@@ -4,7 +4,7 @@ import requests
 from selenium import webdriver
 
 URL = 'https://algeria.blsspainvisa.com/english/book_appointment.php'
-
+IS_MONITORING = False
 
 def monitor():
     r = requests.get(URL)

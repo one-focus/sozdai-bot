@@ -24,10 +24,11 @@ def main_menu_buttons():
 
 @bot.callback_query_handler(func=lambda c: True)
 def inline(c):
-    if c.data == 'visa':
+    if c.data == 'visa' and visa.IS_MONITORING == False:
         while True:
             screenshot = visa.monitor()
             if not screenshot:
+                visa.IS_MONITORING = True
                 prog = "◽"
                 for i in range(3600):
                     if len(prog) > 2:
@@ -38,6 +39,7 @@ def inline(c):
                                           message_id=c.message.message_id)
                     time.sleep(1)
             else:
+                visa.IS_MONITORING = False
                 keyboard = types.InlineKeyboardMarkup()
                 link_button = types.InlineKeyboardButton(text="Сайт", url=visa.URL)
                 keyboard.add(link_button)
