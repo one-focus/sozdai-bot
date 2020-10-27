@@ -31,10 +31,7 @@ def inline(c):
         while True:
             screenshot = visa.monitor()
             if not screenshot:
-                if len(prog) > 10:
-                    prog = "🟩"
-                else:
-                    prog = f"{prog}🟩"
+                prog = "🟩" if len(prog) > 10 else prog = f"{prog}🟩"
                 bot.edit_message_text(chat_id=c.message.chat.id, text=prog, message_id=c.message.message_id)
                 time.sleep(10)
             else:
