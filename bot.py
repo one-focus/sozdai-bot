@@ -27,17 +27,19 @@ def main_menu_buttons():
 def inline(c):
     if c.data == 'visa':
         bot.send_message(c.message.chat.id, 'Мониторинг виз запущен🟩')
-        # progress = "🟩"
-        # while True:
-        #     screenshot = visa.monitor()
-        #     if not screenshot:
-        #         progress = "🟩" if len(progress) > 10 else progress = f"{progress}🟩"
-        #         bot.edit_message_text(chat_id=c.message.chat.id, text=progress, message_id=c.message.message_id)
-        #         time.sleep(10)
-        #     else:
+        progress = "🟩"
+        while True:
+            screenshot = visa.monitor()
+            if not screenshot:
+                bot.send_message(c.message.chat.id, 'скриншот не найден')
+                progress = "🟩" if len(progress) > 10 else progress = f"{progress}🟩"
+                bot.edit_message_text(chat_id=c.message.chat.id, text=progress, message_id=c.message.message_id)
+                time.sleep(10)
+            else:
+                bot.send_message(c.message.chat.id, 'скриншот найден')
+                break
         #         link_button = types.InlineKeyboardButton(text="Сайт", url=visa.URL)
         #         bot.send_photo(c.message.chat.id, visa.monitor(), reply_markup=link_button)
-        #         break
     elif c.data == 'trains':
         key = types.InlineKeyboardMarkup()
         but_1 = types.InlineKeyboardButton(text="из Минск-Северного", callback_data="minsk")
