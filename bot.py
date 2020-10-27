@@ -44,7 +44,7 @@ def send_text(message):
 
 
 def get_trains(url):
-    ra = requests.get(url)
+    ra = requests.get(url=url)
     ra_html = html.fromstring(ra.content)
     print(f'ra_html:{ra_html}')
     title = ra_html.xpath('//div[@class="sch-title__title h2"]/text()')
