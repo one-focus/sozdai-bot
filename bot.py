@@ -26,12 +26,12 @@ def main_menu_buttons():
 @bot.callback_query_handler(func=lambda c: True)
 def inline(c):
     if c.data == 'visa':
-        bot.send_message(c.message.chat.id, 'Мониторинг виз запущен🟩')
-        prog = "🟩"
+        bot.send_message(c.message.chat.id, 'Мониторинг виз запущен')
+        prog = "◽"
         while True:
             screenshot = visa.monitor()
             if not screenshot:
-                prog = "🟩" if len(prog) > 10 else prog = f"{prog}🟩"
+                prog = "◽" if len(prog) > 10 else prog = f"{prog}◽"
                 bot.edit_message_text(chat_id=c.message.chat.id, text=prog, message_id=c.message.message_id)
                 time.sleep(10)
             else:
