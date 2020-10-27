@@ -30,8 +30,10 @@ def inline(c):
             if not screenshot:
                 show_progress_bar(3600)
             else:
+                keyboard = types.InlineKeyboardMarkup()
                 link_button = types.InlineKeyboardButton(text="Сайт", url=visa.URL)
-                bot.send_photo(c.message.chat.id, visa.monitor(), reply_markup=link_button)
+                keyboard.add(link_button)
+                bot.send_photo(c.message.chat.id, visa.send_screenshot(), reply_markup=keyboard)
                 break
     elif c.data == 'trains':
         key = types.InlineKeyboardMarkup()
@@ -51,8 +53,7 @@ def inline(c):
         bot.send_message(c.message.chat.id, res)
     elif c.data == 'screen':
         keyboard = types.InlineKeyboardMarkup()
-        link_button = types.InlineKeyboardButton(text="Сайт",
-                                                 url='https://algeria.blsspainvisa.com/english/book_appointment.php')
+        link_button = types.InlineKeyboardButton(text="Сайт", url=visa.URL)
         keyboard.add(link_button)
         bot.send_photo(c.message.chat.id, visa.send_screenshot(), reply_markup=keyboard)
     elif c.data == 'back_to_main':
