@@ -32,21 +32,20 @@ def send_text(message):
         bot.send_message(message.chat.id, 'Прощай, создатель')
     elif message.text.lower() == 'минск':
         bot.send_message(message.chat.id, 'минск')
-        message = get_trains(
+        res = get_trains(
             "https://pass.rw.by/ru/route/?from=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA-%D0%A1%D0%B5%D0%B2%D0%B5%D1%80%D0%BD%D1%8B%D0%B9&from_exp=2100450&from_esr=140102&to=%D0%A0%D0%B0%D1%82%D0%BE%D0%BC%D0%BA%D0%B0&to_exp=&to_esr=&front_date=%D1%81%D0%B5%D0%B3%D0%BE%D0%B4%D0%BD%D1%8F&date=today")
-        bot.send_message(message.chat.id, message)
+        bot.send_message(message.chat.id, res)
     elif message.text.lower() == 'ратомка':
         bot.send_message(message.chat.id, 'ратомка')
-        message = get_trains(
+        res = get_trains(
             "https://pass.rw.by/ru/route/?from=%D0%A0%D0%B0%D1%82%D0%BE%D0%BC%D0%BA%D0%B0&from_exp=&from_esr=&to=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA-%D0%A1%D0%B5%D0%B2%D0%B5%D1%80%D0%BD%D1%8B%D0%B9&to_exp=2100450&to_esr=140102&front_date=%D1%81%D0%B5%D0%B3%D0%BE%D0%B4%D0%BD%D1%8F&date=today")
-        bot.send_message(message.chat.id, message)
+        bot.send_message(message.chat.id, res)
     elif message.text.lower() == 'я тебя люблю':
         bot.send_sticker(message.chat.id, 'CAADAgADZgkAAnlc4gmfCor5YbYYRAI')
 
 
 def get_trains(url):
     ra = requests.get(url=url)
-    return "success"
     ra_html = html.fromstring(ra.content)
     print(f'ra_html:{ra_html}')
     title = ra_html.xpath('//div[@class="sch-title__title h2"]/text()')
