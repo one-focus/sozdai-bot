@@ -26,7 +26,6 @@ def main_menu_buttons():
 @bot.callback_query_handler(func=lambda c: True)
 def inline(c):
     if c.data == 'visa':
-        bot.send_message(c.message.chat.id, 'Мониторинг виз запущен')
         prog = "◽"
         while True:
             bot.send_message(c.message.chat.id, "1")
@@ -38,7 +37,7 @@ def inline(c):
                 else:
                     prog = f"{prog}◽"
                 bot.edit_message_text(chat_id=c.message.chat.id, text=prog, message_id=c.message.message_id)
-                time.sleep(10)
+                time.sleep(1)
             else:
                 link_button = types.InlineKeyboardButton(text="Сайт", url=visa.URL)
                 bot.send_photo(c.message.chat.id, visa.monitor(), reply_markup=link_button)
