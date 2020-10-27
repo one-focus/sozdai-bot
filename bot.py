@@ -1,90 +1,67 @@
-from lxml import html
 import time
 
-import requests
+import trains
 import telebot
-from selenium import webdriver
-import os
-import datetime
+import visa
+from telebot import types
 
-bot = telebot.TeleBot('1234408699:AAEbP0lO7h3BV3XK0Ug1qzc9jPR8_DGtoUI')
-keyboard1 = telebot.types.ReplyKeyboardMarkup()
-keyboard1.row('Привет', 'Пока')
-url = 'https://algeria.blsspainvisa.com/english/book_appointment.php'
+bot = telebot.TeleBot("1275523107:AAF_5t_r80J55Pl-JcVeLcVVOsl7kadqAc4")
 
 
-@bot.message_handler(commands=['start'])
-def start_message(message):
-    send_screenshot(message)
+@bot.message_handler(commands=["start"])
+def inline(message):
+    bot.send_message(message.chat.id, "Чего угодно?", reply_markup=main_menu_buttons())
 
 
-@bot.message_handler(content_types=['text'])
-def send_text(message):
-    if message.text.lower() == 'привет':
-        bot.send_message(message.chat.id, 'Привет, мой создатель')
+def main_menu_buttons():
+    key = types.InlineKeyboardMarkup()
+    but_1 = types.InlineKeyboardButton(text="Виза", callback_data="visa")
+    but_2 = types.InlineKeyboardButton(text="Поезда", callback_data="trains")
+    but_3 = types.InlineKeyboardButton(text="NumberTree", callback_data="screen")
+    key.add(but_1, but_2, but_3)
+    return key
+
+
+@bot.callback_query_handler(func=lambda c: True)
+def inline(c):
+    if c.data == 'visa':
+        bot.send_message(c.message.chat.id, 'Привет, мой создатель')
         while True:
-            r = requests.get(url)
-            if "Appointment dates are not available." in str(r.content):
-                bot.send_message(message.chat.id, str(datetime.datetime.now().time()))
+            screenshot = visa.monitor()
+            if not screenshot:
                 time.sleep(6000)
             else:
-                bot.send_message(message.chat.id, f'Cообщение не найдено: {str(r.content)}')
-                send_screenshot(message)
-    elif message.text.lower() == 'пока':
-        bot.send_message(message.chat.id, 'Прощай, создатель')
-    elif message.text.lower() == 'минск':
-        res = get_trains(
+                link_button = types.InlineKeyboardButton(text="Сайт", url=visa.URL)
+                bot.send_photo(c.message.chat.id, visa.monitor(), reply_markup=link_button)
+                break
+    elif c.data == 'trains':
+        key = types.InlineKeyboardMarkup()
+        but_1 = types.InlineKeyboardButton(text="из Минск-Северного", callback_data="minsk")
+        but_2 = types.InlineKeyboardButton(text="из Ратомки", callback_data="ratomka")
+        but_3 = types.InlineKeyboardButton(text="< Назад", callback_data="back_to_main")
+        key.add(but_1, but_2, but_3)
+        bot.edit_message_text(chat_id=c.message.chat.id, text="Направление", message_id=c.message.message_id,
+                              reply_markup=key)
+    elif c.data == 'screen':
+        link_button = types.InlineKeyboardButton(text="Сайт", url=visa.URL)
+        bot.send_photo(c.message.chat.id, visa.send_screenshot(), reply_markup=link_button)
+    elif c.data == 'back_to_main':
+        key = types.InlineKeyboardMarkup()
+        but_1 = types.InlineKeyboardButton(text="NumberOne", callback_data="NumberOne")
+        but_2 = types.InlineKeyboardButton(text="Поезда", callback_data="Поезда")
+        but_3 = types.InlineKeyboardButton(text="NumberTree", callback_data="NumberTree")
+        key.add(but_1, but_2, but_3)
+        bot.edit_message_text(chat_id=c.message.chat.id, text="Чего угодно?", message_id=c.message.message_id,
+                              reply_markup=key)
+    elif c.data == 'minsk':
+        res = trains.get_trains(
             "https://pass.rw.by/ru/route/?from=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA-%D0%A1%D0%B5%D0%B2%D0%B5%D1%80%D0%BD%D1%8B%D0%B9&from_exp=2100450&from_esr=140102&to=%D0%A0%D0%B0%D1%82%D0%BE%D0%BC%D0%BA%D0%B0&to_exp=&to_esr=&front_date=%D1%81%D0%B5%D0%B3%D0%BE%D0%B4%D0%BD%D1%8F&date=today")
-        bot.send_message(message.chat.id, res)
-    elif message.text.lower() == 'ратомка':
-        res = get_trains(
+        bot.edit_message_text(chat_id=c.message.chat.id, text=res, message_id=c.message.message_id)
+    elif c.data == 'ratomka':
+        res = trains.get_trains(
             "https://pass.rw.by/ru/route/?from=%D0%A0%D0%B0%D1%82%D0%BE%D0%BC%D0%BA%D0%B0&from_exp=&from_esr=&to=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA-%D0%A1%D0%B5%D0%B2%D0%B5%D1%80%D0%BD%D1%8B%D0%B9&to_exp=2100450&to_esr=140102&front_date=%D1%81%D0%B5%D0%B3%D0%BE%D0%B4%D0%BD%D1%8F&date=today")
-        bot.send_message(message.chat.id, res)
-    elif message.text.lower() == 'я тебя люблю':
-        bot.send_sticker(message.chat.id, 'CAADAgADZgkAAnlc4gmfCor5YbYYRAI')
+        bot.send_message(c.message.chat.id, res)
 
 
-def get_trains(url):
-    ra = requests.get(url=url)
-    ra_html = html.fromstring(ra.content)
-    print(f'ra_html:{ra_html}')
-    title = ra_html.xpath('//div[@class="sch-title__title h2"]/text()')
-    print(f'title:{title}')
-    date = ra_html.xpath('//div[@class="sch-title__date h3"]/text()')
-    print(f'date:{date}')
-    types = ra_html.xpath(
-        '//div[@class="sch-table__body js-sort-body"]//div[@class="sch-table__train-type"]/span[@class="sch-table__route-type"]/text()')
-    departures = ra_html.xpath(
-        '//div[@class="sch-table__body js-sort-body"]//div[@class="sch-table__time train-from-time"]/text()')
-    print(f'departures:{departures}')
-    lenght = len(departures) if len(departures) < 3 else 3
-    result = f'{title[0]} {date[0]}\n'
-    for i in range(lenght):
-        result += f'{departures[i]} {types[i][:3]}\n'
-    return result
-
-
-@bot.message_handler(content_types=['sticker'])
-def sticker_id(message):
-    print(message)
-
-
-def send_screenshot(message):
-    chrome_options = webdriver.ChromeOptions()
-    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-    chrome_options.add_argument("--headless")
-    chrome_options.add_argument("--disable-dev-shm-usage")
-    chrome_options.add_argument("--window-size=1024,768")
-    chrome_options.add_argument("--no-sandbox")
-    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
-    driver.implicitly_wait(120)
-    driver.get(url)
-    try:
-        driver.find_element_by_class_name('popup-appCloseIcon').click()
-    except Exception:
-        pass
-    bot.send_photo(message.chat.id, driver.get_screenshot_as_png())
-    bot.send_message(message.chat.id, "https://algeria.blsspainvisa.com/english/book_appointment.php")
-
-
-bot.polling(none_stop=True)
+if __name__ == '__main__':
+    bot.infinity_polling()

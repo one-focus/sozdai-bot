@@ -1,23 +1,32 @@
-from lxml import html
+import os
 
 import requests
+from selenium import webdriver
 
-def get_trains(url):
-    ra = requests.get(url)
-    ra_html = html.fromstring(ra.content)
-    title = ra_html.xpath('//div[@class="sch-title__title h2"]/text()')
-    date = ra_html.xpath('//div[@class="sch-title__date h3"]/text()')
-    types = ra_html.xpath(
-        '//div[@class="sch-table__body js-sort-body"]//div[@class="sch-table__train-type"]/span[@class="sch-table__route-type"]/text()')
-    departures = ra_html.xpath(
-        '//div[@class="sch-table__body js-sort-body"]//div[@class="sch-table__time train-from-time"]/text()')
-    result = f'{title[0]} {date[0]}\n'
-    lenght = len(departures) if len(departures) < 3 else 3
-    if not lenght:
-        result += 'Нет поездов'
-    else:
-        for i in range(lenght):
-            result += f'{departures[i]} {types[i][:3]}\n'
-    return result
+URL = 'https://algeria.blsspainvisa.com/english/book_appointment.php'
 
-print(get_trains("https://pass.rw.by/ru/route/?from=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA-%D0%A1%D0%B5%D0%B2%D0%B5%D1%80%D0%BD%D1%8B%D0%B9&from_exp=2100450&from_esr=140102&to=%D0%A0%D0%B0%D1%82%D0%BE%D0%BC%D0%BA%D0%B0&to_exp=&to_esr=&front_date=%D1%81%D0%B5%D0%B3%D0%BE%D0%B4%D0%BD%D1%8F&date=today"))
+
+def monitor():
+    while True:
+        r = requests.get(URL)
+        if "Appointment dates are not available." in str(r.content):
+            return None
+        else:
+            return send_screenshot()
+
+
+def send_screenshot():
+    chrome_options = webdriver.ChromeOptions()
+    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
+    chrome_options.add_argument("--headless")
+    chrome_options.add_argument("--disable-dev-shm-usage")
+    chrome_options.add_argument("--window-size=1024,768")
+    chrome_options.add_argument("--no-sandbox")
+    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+    driver.implicitly_wait(120)
+    driver.get(URL)
+    try:
+        driver.find_element_by_class_name('popup-appCloseIcon').click()
+    except Exception:
+        pass
+    return driver.get_screenshot_as_png()
