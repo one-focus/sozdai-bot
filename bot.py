@@ -31,7 +31,6 @@ def inline(c):
         while True:
             screenshot = visa.monitor()
             if not screenshot:
-                bot.send_message(c.message.chat.id, 'скриншот не найден')
                 if len(prog) > 10:
                     prog = "🟩"
                 else:
