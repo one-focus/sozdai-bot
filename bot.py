@@ -28,7 +28,15 @@ def inline(c):
         while True:
             screenshot = visa.monitor()
             if not screenshot:
-                show_progress_bar(3600)
+                prog = "◽"
+                for i in range(3600):
+                    if len(prog) > 3:
+                        prog = "◽"
+                    else:
+                        prog = f"{prog}◽"
+                    bot.edit_message_text(chat_id=c.message.chat.id, text=f'Мониторинг дат:\n{prog}',
+                                          message_id=c.message.message_id)
+                    time.sleep(1)
             else:
                 keyboard = types.InlineKeyboardMarkup()
                 link_button = types.InlineKeyboardButton(text="Сайт", url=visa.URL)
@@ -60,16 +68,6 @@ def inline(c):
         bot.edit_message_text(chat_id=c.message.chat.id, text="Чего угодно?", message_id=c.message.message_id,
                               reply_markup=main_menu_buttons())
 
-def show_progress_bar(seconds):
-    prog = "◽"
-    for i in range(seconds):
-        if len(prog) > 10:
-            prog = "◽"
-        else:
-            prog = f"{prog}◽"
-        bot.edit_message_text(chat_id=c.message.chat.id, text=f'Мониторинг дат:\n{prog}',
-                              message_id=c.message.message_id)
-        time.sleep(1)
 
 if __name__ == '__main__':
     bot.infinity_polling()
