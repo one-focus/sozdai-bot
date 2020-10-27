@@ -7,12 +7,11 @@ URL = 'https://algeria.blsspainvisa.com/english/book_appointment.php'
 
 
 def monitor():
-    while True:
-        r = requests.get(URL)
-        if "Appointment dates are not available." in str(r.content):
-            return None
-        else:
-            return send_screenshot()
+    r = requests.get(URL)
+    if "Appointment dates are not available." in str(r.content):
+        return None
+    else:
+        return send_screenshot()
 
 
 def send_screenshot():
