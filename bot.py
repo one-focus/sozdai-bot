@@ -34,7 +34,7 @@ def inline(c):
                     visa.IS_MONITORING = True
                     prog = "◽"
                     for i in range(3600):
-                        if len(prog) > 4:
+                        if len(prog) > 3:
                             prog = "◽"
                         else:
                             prog = f"{prog}◽"
