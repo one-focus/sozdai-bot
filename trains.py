@@ -16,5 +16,5 @@ def get_trains(url):
     for i in range(lenght):
         if i % 3 == 0:
             result += "\n"
-        result += f'{"🔴" if types[i][0].lower() == "г" else "🔷"} {departures[i]}\n'
+        result += f'{"🔴" if types[i][0].lower() == "г" else "🔷"} {departures[i]}    '
     return result
