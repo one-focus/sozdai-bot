@@ -1,7 +1,6 @@
 import time
 
-from telebot.apihelper import ApiException
-
+import search
 import trains
 import telebot
 import visa
@@ -15,11 +14,44 @@ def inline(message):
     bot.send_message(message.chat.id, text="Что хотите сделать, Александр?", reply_markup=main_menu_buttons())
 
 
+@bot.message_handler(content_types=['text'])
+def start(message):
+    if message.text == 'Что будем искать?':
+        bot.register_next_step_handler(message, search_on_baraholka(message=message))
+    else:
+        bot.send_message(message.chat.id, 'Не понимаю, выберите действие', reply_markup=main_menu_buttons())
+
+
+def sleep_animation(message, duration):
+    prog = "◽"
+    for i in range(duration):
+        if len(prog) > 3:
+            prog = "◽"
+        else:
+            prog = f"{prog}◽"
+        bot.edit_message_text(chat_id=message.chat.id, text=f'Мониторим {message.text}:\n{prog}',
+                              message_id=message.message_id)
+        time.sleep(1)
+
+
+def search_on_baraholka(message):
+    search_results = search.search_baraholka(message)
+    while True:
+        res = search.search_baraholka(message)
+        for i in res:
+            if res[i] not in search_results:
+                bot.send_message(message.chat.id,
+                                 f'*{res[3]} [{res[1]}](https://baraholka.onliner.by/viewtopic.php?t={res[0]})*\n_{res[2]}_',
+                                 parse_mode='MarkdownV2')
+        search_results = res
+        sleep_animation(message=message, duration=60)
+
+
 def main_menu_buttons():
     key = types.InlineKeyboardMarkup()
     but_1 = types.InlineKeyboardButton(text="Виза", callback_data="visa")
     but_2 = types.InlineKeyboardButton(text="Поезда", callback_data="trains")
-    but_3 = types.InlineKeyboardButton(text="Скриншот", callback_data="screen")
+    but_3 = types.InlineKeyboardButton(text="Поиск", callback_data="search")
     key.add(but_1, but_2, but_3)
     return key
 
@@ -32,15 +64,7 @@ def inline(c):
                 screenshot = visa.monitor()
                 if not screenshot:
                     visa.IS_MONITORING = True
-                    prog = "◽"
-                    for i in range(3600):
-                        if len(prog) > 3:
-                            prog = "◽"
-                        else:
-                            prog = f"{prog}◽"
-                        bot.edit_message_text(chat_id=c.message.chat.id, text=f'Мониторинг дат:\n{prog}',
-                                              message_id=c.message.message_id)
-                        time.sleep(1)
+                    sleep_animation(message=c.message, duration=3600)
                 else:
                     visa.IS_MONITORING = False
                     keyboard = types.InlineKeyboardMarkup()
@@ -54,7 +78,8 @@ def inline(c):
             but_2 = types.InlineKeyboardButton(text="Ратомка", callback_data="ratomka")
             but_3 = types.InlineKeyboardButton(text="< Назад", callback_data="back_to_main")
             key.add(but_1, but_2, but_3)
-            bot.edit_message_text(chat_id=c.message.chat.id, text="Откуда хотите поехать, Александр?:", message_id=c.message.message_id,
+            bot.edit_message_text(chat_id=c.message.chat.id, text="Откуда хотите поехать, Александр?:",
+                                  message_id=c.message.message_id,
                                   reply_markup=key)
         elif c.data == 'minsk':
             bot.edit_message_text(text=trains.get_trains(
@@ -64,13 +89,11 @@ def inline(c):
             bot.edit_message_text(trains.get_trains(
                 "https://pass.rw.by/ru/route/?from=%D0%A0%D0%B0%D1%82%D0%BE%D0%BC%D0%BA%D0%B0&from_exp=&from_esr=&to=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA-%D0%A1%D0%B5%D0%B2%D0%B5%D1%80%D0%BD%D1%8B%D0%B9&to_exp=2100450&to_esr=140102&front_date=%D1%81%D0%B5%D0%B3%D0%BE%D0%B4%D0%BD%D1%8F&date=today"),
                 chat_id=c.message.chat.id, message_id=c.message.message_id, reply_markup=main_menu_buttons())
-        elif c.data == 'screen':
-            keyboard = types.InlineKeyboardMarkup()
-            link_button = types.InlineKeyboardButton(text="Сайт", url=visa.URL)
-            keyboard.add(link_button)
-            bot.send_photo(c.message.chat.id, visa.send_screenshot(), reply_markup=keyboard)
+        elif c.data == 'search':
+            bot.send_message(c.message.chat.id, text="Что будем искать?")
         elif c.data == 'back_to_main':
-            bot.edit_message_text(chat_id=c.message.chat.id, text="Что хотите сделать, Александр?", message_id=c.message.message_id,
+            bot.edit_message_text(chat_id=c.message.chat.id, text="Что хотите сделать, Александр?",
+                                  message_id=c.message.message_id,
                                   reply_markup=main_menu_buttons())
     except Exception as e:
         bot.send_message(c.message.chat.id, text=f"Ошибка:{e}")
