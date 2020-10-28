@@ -14,12 +14,6 @@ def inline(message):
     bot.send_message(message.chat.id, text="Что хотите сделать, Александр?", reply_markup=main_menu_buttons())
 
 
-@bot.message_handler(сommands=["search"])
-def search_b(message):
-    bot.send_message(message.chat.id, text="Что будем искать и мониторить?:")
-    bot.register_next_step_handler(message, search_on_baraholka)
-
-
 def sleep_animation(message, duration):
     prog = "◽"
     for i in range(duration):
@@ -88,7 +82,7 @@ def inline(c):
                 "https://pass.rw.by/ru/route/?from=%D0%A0%D0%B0%D1%82%D0%BE%D0%BC%D0%BA%D0%B0&from_exp=&from_esr=&to=%D0%9C%D0%B8%D0%BD%D1%81%D0%BA-%D0%A1%D0%B5%D0%B2%D0%B5%D1%80%D0%BD%D1%8B%D0%B9&to_exp=2100450&to_esr=140102&front_date=%D1%81%D0%B5%D0%B3%D0%BE%D0%B4%D0%BD%D1%8F&date=today"),
                 chat_id=c.message.chat.id, message_id=c.message.message_id, reply_markup=main_menu_buttons())
         elif c.data == 'search':
-            bot.send_message(c.message.chat.id, text="Наберите /search")
+            bot.register_next_step_handler(c.message, search_on_baraholka)
         elif c.data == 'back_to_main':
             bot.edit_message_text(chat_id=c.message.chat.id, text="Что хотите сделать, Александр?",
                                   message_id=c.message.message_id,
