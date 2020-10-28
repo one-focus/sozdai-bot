@@ -32,8 +32,7 @@ def search_on_baraholka(message):
         res = search.search_baraholka(message.text)
         for product in res:
             if product not in search.search_results:
-                bot.send_message(message.chat.id,
-                                 f'https://baraholka.onliner.by/viewtopic.php?t={product[0]}')
+                bot.send_message(message.chat.id, f'https://baraholka.onliner.by/viewtopic.php?t={product[0]}')
         search.search_results = res
         sleep_animation(message=search.global_mess, duration=60)
 
