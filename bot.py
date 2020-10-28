@@ -75,5 +75,5 @@ if __name__ == '__main__':
     try:
         bot.polling()
     except Exception as e:
-        print(f'Exception:{e}')
+        print(f'Исключение:{e}')
         bot.polling()
