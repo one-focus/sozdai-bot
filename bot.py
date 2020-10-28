@@ -14,7 +14,7 @@ def inline(message):
     bot.send_message(message.chat.id, text="Что хотите сделать, Александр?", reply_markup=main_menu_buttons())
 
 
-@bot.message_handler(сommands=['/search'])
+@bot.message_handler(сommands=["search"])
 def start(message):
     bot.send_message(message.chat.id, text="Что будем искать и мониторить?:")
     bot.register_next_step_handler(message, search_on_baraholka(message=message))
