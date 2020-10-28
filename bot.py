@@ -27,6 +27,7 @@ def sleep_animation(message, duration):
 
 
 def search_on_baraholka(message):
+    bot.send_message(message.chat.id, text="Ищу...")
     search_results = search.search_baraholka(message.text)
     while True:
         res = search.search_baraholka(message.text)
@@ -84,7 +85,7 @@ def inline(c):
                 chat_id=c.message.chat.id, message_id=c.message.message_id, reply_markup=main_menu_buttons())
         elif c.data == 'search':
             bot.send_message(c.message.chat.id, text="Что ищем?")
-            bot.register_next_step_handler(c.message, search_on_baraholka)
+            bot.register_next_step_handler(c.message, search_on_baraholka(c.message))
         elif c.data == 'back_to_main':
             bot.edit_message_text(chat_id=c.message.chat.id, text="Что хотите сделать, Александр?",
                                   message_id=c.message.message_id,
