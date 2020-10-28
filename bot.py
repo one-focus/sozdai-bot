@@ -30,8 +30,8 @@ def search_on_baraholka(message):
     search_results = search.search_baraholka(message.text)
     while True:
         res = search.search_baraholka(message.text)
-        for i in res:
-            if res[i] not in search_results:
+        for product in res:
+            if product not in search_results:
                 bot.send_message(message.chat.id,
                                  f'*{res[3]} [{res[1]}](https://baraholka.onliner.by/viewtopic.php?t={res[0]})*\n_{res[2]}_',
                                  parse_mode='MarkdownV2')
