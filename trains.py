@@ -1,6 +1,7 @@
 import requests
 from lxml import html
 
+
 def get_trains(url):
     ra = requests.get(url=url)
     ra_html = html.fromstring(ra.content)

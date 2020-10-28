@@ -10,9 +10,9 @@ IS_MONITORING = False
 def monitor():
     r = requests.get(URL)
     if "Appointment dates are not available." in str(r.content):
-        return None, None
+        return None
     else:
-        return send_screenshot(), r.text
+        return send_screenshot()
 
 
 def send_screenshot():

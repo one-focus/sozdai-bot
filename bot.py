@@ -26,7 +26,7 @@ def main_menu_buttons():
 def inline(c):
     if c.data == 'visa' and visa.IS_MONITORING == False:
         while True:
-            screenshot, error = visa.monitor()
+            screenshot = visa.monitor()
             if not screenshot:
                 visa.IS_MONITORING = True
                 prog = "◽"
@@ -44,7 +44,6 @@ def inline(c):
                 link_button = types.InlineKeyboardButton(text="Сайт", url=visa.URL)
                 keyboard.add(link_button)
                 bot.send_photo(c.message.chat.id, visa.send_screenshot(), reply_markup=keyboard)
-                bot.send_message(c.message.chat.id, text=f'page text:{error}', reply_markup=keyboard)
                 break
     elif c.data == 'trains':
         key = types.InlineKeyboardMarkup()
