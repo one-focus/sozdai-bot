@@ -29,6 +29,7 @@ def sleep_animation(message, duration):
 def search_on_baraholka(message):
     search.search_results = search.search_baraholka(message.text)
     product = search.search_results[0]
+    print(f'product:{product}')
     bot.send_message(message.chat.id,
                      f'*{product[3]} [{product[1]}](https://baraholka.onliner.by/viewtopic.php?t={product[0]})*\n_{product[2]}_',
                      parse_mode='MarkdownV2')
