@@ -11,7 +11,7 @@ bot = telebot.TeleBot("1275523107:AAF_5t_r80J55Pl-JcVeLcVVOsl7kadqAc4")
 
 @bot.message_handler(commands=["start"])
 def inline(message):
-    bot.send_message(message.chat.id, text="Что хотите сделать, Александр?", reply_markup=main_menu_buttons())
+    bot.send_message(message.chat.id, text="Что хотите сделать, Александр? -- ", reply_markup=main_menu_buttons())
 
 
 def sleep_animation(message, duration):
