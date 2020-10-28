@@ -54,7 +54,7 @@ def inline(c):
             but_2 = types.InlineKeyboardButton(text="из Ратомки", callback_data="ratomka")
             but_3 = types.InlineKeyboardButton(text="< Назад", callback_data="back_to_main")
             key.add(but_1, but_2, but_3)
-            bot.edit_message_text(chat_id=c.message.chat.id, text="Выберите направление", message_id=c.message.message_id,
+            bot.edit_message_text(chat_id=c.message.chat.id, text="Откуда хотите поехать:", message_id=c.message.message_id,
                                   reply_markup=key)
         elif c.data == 'minsk':
             bot.edit_message_text(text=trains.get_trains(
