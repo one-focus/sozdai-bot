@@ -27,22 +27,15 @@ def sleep_animation(message, duration):
 
 
 def search_on_baraholka(message):
-    search.search_results = search.search_baraholka(message.text)
-    product = search.search_results[0]
-    print(f'product:{product}')
-    bot.send_message(message.chat.id,
-                     f'*{product[3]} [{product[1]}](https://baraholka.onliner.by/viewtopic.php?t={product[0]})*\n_{product[2]}_',
-                     parse_mode='MarkdownV2')
-    # while True:
-    #     res = search.search_baraholka(message.text)
-    #     for product in res:
-    #         # if product not in search.search_results:
-    #         bot.send_message(message.chat.id,
-    #                          f'*{product[3]} [{product[1]}](https://baraholka.onliner.by/viewtopic.php?t={product[0]})*\n_{product[2]}_',
-    #                          parse_mode='MarkdownV2')
-    #     search.search_results = res
-    #     print(message.text)
-    #     sleep_animation(message=search.global_mess, duration=60)
+    search.search_results = []
+    while True:
+        res = search.search_baraholka(message.text)
+        for product in res:
+            if product not in search.search_results:
+                bot.send_message(message.chat.id,
+                                 f'{product[3]} {product[1]}\n{product[2]}\nhttps://baraholka.onliner.by/viewtopic.php?t={product[0]}')
+        search.search_results = res
+        sleep_animation(message=search.global_mess, duration=60)
 
 
 def main_menu_buttons():
