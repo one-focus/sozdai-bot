@@ -15,9 +15,9 @@ def inline(message):
 
 
 @bot.message_handler(сommands=["search"])
-def start(message):
+def search_b(message):
     bot.send_message(message.chat.id, text="Что будем искать и мониторить?:")
-    bot.register_next_step_handler(message, search_on_baraholka(message=message))
+    bot.register_next_step_handler(message, search_on_baraholka)
 
 
 def sleep_animation(message, duration):
