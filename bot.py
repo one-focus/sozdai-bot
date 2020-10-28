@@ -28,11 +28,14 @@ def sleep_animation(message, duration):
 
 def search_on_baraholka(message):
     search.search_results = []
+    keyboard = types.InlineKeyboardMarkup()
     while True:
         res = search.search_baraholka(message.text)
         for product in res:
             if product not in search.search_results:
-                bot.send_message(message.chat.id, f'https://baraholka.onliner.by/viewtopic.php?t={product[0]}')
+                link_button = types.InlineKeyboardButton(text="Сайт", url=f'https://baraholka.onliner.by/viewtopic.php?t={product[0]}')
+                keyboard.add(link_button)
+                bot.send_message(message.chat.id, text=f"{product[3]} {product[1]}\n{product[2]}" ,reply_markup=keyboard)
         search.search_results = res
         sleep_animation(message=search.global_mess, duration=60)
 
