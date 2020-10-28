@@ -33,7 +33,7 @@ def search_on_baraholka(message):
         for product in res:
             if product not in search.search_results:
                 keyboard = types.InlineKeyboardMarkup()
-                link_button = types.InlineKeyboardButton(text="product[3]",
+                link_button = types.InlineKeyboardButton(text=product[3],
                                                          url=f'https://baraholka.onliner.by/viewtopic.php?t={product[0]}')
                 keyboard.add(link_button)
                 bot.send_message(message.chat.id, text=f"\n{product[1]}\n\n{product[2]}", reply_markup=keyboard)
