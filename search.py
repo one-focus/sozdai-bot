@@ -3,6 +3,7 @@ from lxml import html
 
 base_url = "https://baraholka.onliner.by"
 global_mess = None
+search_results = None
 
 def search_baraholka(query):
     r = requests.get(url=f"https://baraholka.onliner.by/search.php?q={query}&by=up&cat=1&topicTitle=1")

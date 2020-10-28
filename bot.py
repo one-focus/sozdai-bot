@@ -8,6 +8,7 @@ from telebot import types
 
 bot = telebot.TeleBot("1275523107:AAF_5t_r80J55Pl-JcVeLcVVOsl7kadqAc4")
 
+
 @bot.message_handler(commands=["start"])
 def inline(message):
     bot.send_message(message.chat.id, text="холодильник", reply_markup=main_menu_buttons())
@@ -26,15 +27,15 @@ def sleep_animation(message, duration):
 
 
 def search_on_baraholka(message):
-    search_results = search.search_baraholka(message.text)
+    search.search_results = search.search_baraholka(message.text)
     while True:
         res = search.search_baraholka(message.text)
         for product in res:
-            if product not in search_results:
-                bot.send_message(message.chat.id,
-                                 f'*{res[3]} [{res[1]}](https://baraholka.onliner.by/viewtopic.php?t={res[0]})*\n_{res[2]}_',
-                                 parse_mode='MarkdownV2')
-        search_results = res
+            # if product not in search.search_results:
+            bot.send_message(message.chat.id,
+                             f'*{product[3]} [{product[1]}](https://baraholka.onliner.by/viewtopic.php?t={product[0]})*\n_{product[2]}_',
+                             parse_mode='MarkdownV2')
+        search.search_results = res
         print(message.text)
         sleep_animation(message=search.global_mess, duration=60)
 
