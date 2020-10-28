@@ -50,8 +50,8 @@ def inline(c):
                     break
         elif c.data == 'trains':
             key = types.InlineKeyboardMarkup()
-            but_1 = types.InlineKeyboardButton(text="из Минск-Северного", callback_data="minsk")
-            but_2 = types.InlineKeyboardButton(text="из Ратомки", callback_data="ratomka")
+            but_1 = types.InlineKeyboardButton(text="Минск-Сев", callback_data="minsk")
+            but_2 = types.InlineKeyboardButton(text="Ратомка", callback_data="ratomka")
             but_3 = types.InlineKeyboardButton(text="< Назад", callback_data="back_to_main")
             key.add(but_1, but_2, but_3)
             bot.edit_message_text(chat_id=c.message.chat.id, text="Откуда хотите поехать, Александр?:", message_id=c.message.message_id,
