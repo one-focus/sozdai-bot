@@ -72,8 +72,8 @@ def inline(c):
         elif c.data == 'back_to_main':
             bot.edit_message_text(chat_id=c.message.chat.id, text="Что хотите сделать, Александр?", message_id=c.message.message_id,
                                   reply_markup=main_menu_buttons())
-    except ApiException:
-        pass
+    except Exception as e:
+        bot.send_message(c.message.chat.id, text=f"Ошибка:{e}", reply_markup=main_menu_buttons())
 
 
 if __name__ == '__main__':
