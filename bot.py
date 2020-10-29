@@ -36,7 +36,7 @@ def search_on_baraholka(message):
                 link_button = types.InlineKeyboardButton(text=product[3],
                                                          url=f'https://baraholka.onliner.by/viewtopic.php?t={product[0]}')
                 keyboard.add(link_button)
-                bot.send_message(message.chat.id, text=f"\n{product[1]}\n\n{product[2]}", reply_markup=keyboard)
+                bot.send_message(message.chat.id, text=f"\n{product[1]}", reply_markup=keyboard)
         search.search_results = res
         sleep_animation(message=search.global_mess, duration=60)
 
