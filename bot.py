@@ -28,19 +28,22 @@ def sleep_animation(message, duration):
 
 def search_on_baraholka(message):
     search.search_results = []
-    while True:
-        res = search.search_baraholka(message.text)
-        for product in res:
-            print(f'product:{product}')
-            print(f'search_results:{search.search_results}')
-            if product[0] not in [result[0] for result in search.search_results]:
-                keyboard = types.InlineKeyboardMarkup()
-                link_button = types.InlineKeyboardButton(text=product[3],
-                                                         url=f'https://baraholka.onliner.by/viewtopic.php?t={product[0]}')
-                keyboard.add(link_button)
-                bot.send_message(message.chat.id, text=f"\n{product[1]}", reply_markup=keyboard)
-                search.search_results.append(product)
-        sleep_animation(message=search.global_mess, duration=60)
+    try:
+        while True:
+            res = search.search_baraholka(message.text)
+            for product in res:
+                print(f'product:{product}')
+                print(f'search_results:{search.search_results}')
+                if product[0] not in [result[0] for result in search.search_results]:
+                    keyboard = types.InlineKeyboardMarkup()
+                    link_button = types.InlineKeyboardButton(text=product[3],
+                                                             url=f'https://baraholka.onliner.by/viewtopic.php?t={product[0]}')
+                    keyboard.add(link_button)
+                    bot.send_message(message.chat.id, text=f"\n{product[1]}", reply_markup=keyboard)
+                    search.search_results.append(product)
+            sleep_animation(message=search.global_mess, duration=60)
+    except Exception as e:
+        bot.send_message(message.chat.id, text=f"Ошибка:{e}")
 
 
 def main_menu_buttons():
