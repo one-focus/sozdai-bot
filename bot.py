@@ -31,6 +31,8 @@ def search_on_baraholka(message):
     while True:
         res = search.search_baraholka(message.text)
         for product in res:
+            print(f'product:{product}')
+            print(f'search_results:{search.search_results}')
             if product not in search.search_results:
                 keyboard = types.InlineKeyboardMarkup()
                 link_button = types.InlineKeyboardButton(text=product[3],
