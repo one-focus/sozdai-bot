@@ -27,16 +27,16 @@ def sleep_animation(message, duration):
 
 
 def search_on_baraholka(message):
-    search.search_results = []
+    search_results = []
     try:
         while True:
-            res = search.search_baraholka(message.text)
+            res = search.search(message.text)
             for product in res:
                 print(f'product:{product}')
-                print(f'search_results:{search.search_results}')
+                print(f'search_results:{search_results}')
                 if product[0] not in [result[0] for result in search.search_results]:
                     keyboard = types.InlineKeyboardMarkup()
-                    link_button = types.InlineKeyboardButton(text=product[3],
+                    link_button = types.InlineKeyboardButton(text=product[2],
                                                              url=f'https://baraholka.onliner.by/viewtopic.php?t={product[0]}')
                     keyboard.add(link_button)
                     bot.send_message(message.chat.id, text=f"\n{product[1]}", reply_markup=keyboard)
