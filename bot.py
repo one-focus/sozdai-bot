@@ -15,15 +15,8 @@ def inline(message):
 
 
 def sleep_animation(message, duration, text):
-    prog = "◽"
     for i in range(duration):
-        if not search.is_searching:
-            break
-        if len(prog) > 3:
-            prog = "◽"
-        else:
-            prog = f"{prog}◽"
-        bot.edit_message_text(chat_id=message.chat.id, text=f'Мониторим {text}:\n{prog}',
+        bot.edit_message_text(chat_id=message.chat.id, text=f'Мониторим {text}:\n{duration - i}',
                               message_id=message.message_id)
         time.sleep(1)
 
@@ -72,7 +65,7 @@ def inline(c):
                     sleep_animation(message=c.message, duration=60, text="Мониторим визы")
                 else:
                     keyboard = types.InlineKeyboardMarkup()
-                    link_button = types.InlineKeyboardButton(text="Сайт", url=visa.URL)
+                    link_button = types.InlineKeyboardButton(text="Открыть сайт", url=visa.URL)
                     keyboard.add(link_button)
                     bot.send_photo(c.message.chat.id, visa.send_screenshot(), reply_markup=keyboard)
                     #
