@@ -60,14 +60,12 @@ def inline(c):
         if c.data == 'visa' and visa.IS_MONITORING == False:
             while True:
                 screenshot = visa.monitor()
-                if not screenshot:
-                    # visa.IS_MONITORING = True
-                    sleep_animation(message=c.message, duration=60, text="Мониторим визы")
-                else:
+                if screenshot:
                     keyboard = types.InlineKeyboardMarkup()
                     link_button = types.InlineKeyboardButton(text="Открыть сайт", url=visa.URL)
                     keyboard.add(link_button)
                     bot.send_photo(c.message.chat.id, visa.send_screenshot(), reply_markup=keyboard)
+                sleep_animation(message=c.message, duration=60, text="Мониторим визы")
                     #
             # visa.IS_MONITORING = False
             #     keyboard = types.InlineKeyboardMarkup()
