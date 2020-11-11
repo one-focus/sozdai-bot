@@ -3,13 +3,15 @@ import os
 import requests
 from selenium import webdriver
 
-URL = 'https://algeria.blsspainvisa.com/english/book_appointment.php'
+# URL = 'https://algeria.blsspainvisa.com/english/book_appointment.php'
+URL = 'https://app.bookitit.com/en/hosteds/widgetdefault/2dfa8d208fa12dcbe904341150d0c10ce'
 IS_MONITORING = False
 
 
 def monitor():
     r = requests.get(URL)
-    if "Appointment dates are not available." in str(r.content):
+    print(str(r.content))
+    if str(r.content) == "b''":
         return None
     else:
         return send_screenshot()

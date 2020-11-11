@@ -68,15 +68,20 @@ def inline(c):
             while True:
                 screenshot = visa.monitor()
                 if not screenshot:
-                    visa.IS_MONITORING = True
-                    sleep_animation(message=c.message, duration=3600, text="Мониторим визы")
+                    # visa.IS_MONITORING = True
+                    sleep_animation(message=c.message, duration=60, text="Мониторим визы")
                 else:
-                    visa.IS_MONITORING = False
                     keyboard = types.InlineKeyboardMarkup()
                     link_button = types.InlineKeyboardButton(text="Сайт", url=visa.URL)
                     keyboard.add(link_button)
                     bot.send_photo(c.message.chat.id, visa.send_screenshot(), reply_markup=keyboard)
-                    break
+                    #
+            # visa.IS_MONITORING = False
+            #     keyboard = types.InlineKeyboardMarkup()
+            #     link_button = types.InlineKeyboardButton(text="Сайт", url=visa.URL)
+            #     keyboard.add(link_button)
+            #     bot.send_photo(c.message.chat.id, visa.send_screenshot(), reply_markup=keyboard)
+            #     break
         elif c.data == 'trains':
             key = types.InlineKeyboardMarkup()
             but_1 = types.InlineKeyboardButton(text="Минск-Сев", callback_data="minsk")
@@ -96,7 +101,8 @@ def inline(c):
                 chat_id=c.message.chat.id, message_id=c.message.message_id, reply_markup=main_menu_buttons())
         elif c.data == 'search':
             search.global_mess = c.message
-            bot.edit_message_text(text="Что хотите найти на куфаре и барахолке?", chat_id=c.message.chat.id, message_id=c.message.message_id)
+            bot.edit_message_text(text="Что хотите найти на куфаре и барахолке?", chat_id=c.message.chat.id,
+                                  message_id=c.message.message_id)
             bot.register_next_step_handler(c.message, search_on_baraholka)
         elif c.data == 'back_to_main':
             bot.edit_message_text(chat_id=c.message.chat.id, text="Что хотите сделать, Александр?",
