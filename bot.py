@@ -16,7 +16,7 @@ def inline(message):
 
 def sleep_animation(message, duration, text):
     for i in range(duration):
-        bot.edit_message_text(chat_id=message.chat.id, text=f'Мониторим {text}:\n{duration - i}',
+        bot.edit_message_text(chat_id=message.chat.id, text=f'Мониторим {text}: {duration - i}',
                               message_id=message.message_id)
         time.sleep(1)
 
@@ -57,7 +57,7 @@ def main_menu_buttons():
 @bot.callback_query_handler(func=lambda c: True)
 def inline(c):
     try:
-        if c.data == 'visa' and visa.IS_MONITORING == False:
+        if c.data == 'visa':
             while True:
                 screenshot = visa.monitor()
                 if not screenshot:
@@ -65,7 +65,7 @@ def inline(c):
                     link_button = types.InlineKeyboardButton(text="Открыть сайт", url=visa.URL)
                     keyboard.add(link_button)
                     bot.send_photo(c.message.chat.id, visa.send_screenshot(), reply_markup=keyboard)
-                sleep_animation(message=c.message, duration=60, text="Мониторим визы")
+                sleep_animation(message=c.message, duration=60, text="визы")
                     #
             # visa.IS_MONITORING = False
             #     keyboard = types.InlineKeyboardMarkup()
