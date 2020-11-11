@@ -16,7 +16,7 @@ def search(query):
     for i in range(len(links) if len(links) < 3 else 3):
         result.append([f'https://baraholka.onliner.by{links[i]}', titles[i], prices[i]])
 
-    r = requests.get(url=f'https://www.kufar.by/listings?ot=1&query={query}&rgn=7')
+    r = requests.get(url=f'https://www.kufar.by/listings?ot=1&rgn=7&query={query}')
     r_html = html.fromstring(r.content.decode('utf-8', 'ignore'))
     links = r_html.xpath('//article/div/a/@href')
     titles = r_html.xpath('//article/div/a/div/img/@alt')
