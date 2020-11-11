@@ -52,7 +52,7 @@ def main_menu_buttons():
     but_2 = types.InlineKeyboardButton(text="Поезда", callback_data="trains")
     but_3 = types.InlineKeyboardButton(text="Поиск", callback_data="search")
     but_4 = types.InlineKeyboardButton(text="Стоп", callback_data="stop_bot")
-    key.add(but_1, but_2, but_3)
+    key.add(but_1, but_2, but_3, but_4)
     return key
 
 
