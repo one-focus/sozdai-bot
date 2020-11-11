@@ -26,4 +26,6 @@ def search(query):
     for i in range(len(links) if len(links) < 5 else 5):
         result.append([links[i], titles[i], prices[i]])
 
+    print(result)
+
     return result
