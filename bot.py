@@ -14,6 +14,11 @@ def inline(message):
     bot.send_message(message.chat.id, text="Что хотите сделать, Александр?", reply_markup=main_menu_buttons())
 
 
+@bot.message_handler(commands=["stop"])
+def inline(message):
+    bot.send_message(message.chat.id, text="Что хотите сделать, Александр?", reply_markup=main_menu_buttons())
+
+
 def sleep_animation(message, duration):
     prog = "◽"
     for i in range(duration):
@@ -90,7 +95,7 @@ def inline(c):
                 chat_id=c.message.chat.id, message_id=c.message.message_id, reply_markup=main_menu_buttons())
         elif c.data == 'search':
             search.global_mess = c.message
-            bot.edit_message_text(text="Что ищем?", chat_id=c.message.chat.id, message_id=c.message.message_id)
+            bot.edit_message_text(text="Что хотите найти на куфаре и барахолке?", chat_id=c.message.chat.id, message_id=c.message.message_id)
             bot.register_next_step_handler(c.message, search_on_baraholka)
         elif c.data == 'back_to_main':
             bot.edit_message_text(chat_id=c.message.chat.id, text="Что хотите сделать, Александр?",
@@ -98,6 +103,9 @@ def inline(c):
                                   reply_markup=main_menu_buttons())
         elif c.data == 'delete_message':
             bot.delete_message(chat_id=c.message.chat.id, message_id=c.message.message_id)
+        elif c.data == 'stop_bot':
+            bot.edit_message_text("Останавливаю бота",chat_id=c.message.chat.id, message_id=c.message.message_id, reply_markup=main_menu_buttons())
+            bot.stop_bot()
     except Exception as e:
         bot.send_message(c.message.chat.id, text=f"Ошибка:{e}")
 
