@@ -14,11 +14,6 @@ def inline(message):
     bot.send_message(message.chat.id, text="Что хотите сделать, Александр?", reply_markup=main_menu_buttons())
 
 
-@bot.message_handler(commands=["stop"])
-def inline(message):
-    bot.send_message(message.chat.id, text="Что хотите сделать, Александр?", reply_markup=main_menu_buttons())
-
-
 def sleep_animation(message, duration):
     prog = "◽"
     for i in range(duration):
@@ -56,6 +51,7 @@ def main_menu_buttons():
     but_1 = types.InlineKeyboardButton(text="Виза", callback_data="visa")
     but_2 = types.InlineKeyboardButton(text="Поезда", callback_data="trains")
     but_3 = types.InlineKeyboardButton(text="Поиск", callback_data="search")
+    but_4 = types.InlineKeyboardButton(text="Стоп", callback_data="stop_bot")
     key.add(but_1, but_2, but_3)
     return key
 
