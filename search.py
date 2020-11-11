@@ -2,8 +2,7 @@
 import requests
 from lxml import html
 
-search_results = ""
-global_mess = ""
+global_mess = None
 
 
 def search(query):
