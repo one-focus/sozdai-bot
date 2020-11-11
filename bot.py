@@ -36,9 +36,9 @@ def search_on_baraholka(message):
                 print(f'search_results:{search_results}')
                 if product[0] not in [result[0] for result in search.search_results]:
                     keyboard = types.InlineKeyboardMarkup()
-                    link_button = types.InlineKeyboardButton(text=product[2],
-                                                             url=f'https://baraholka.onliner.by/viewtopic.php?t={product[0]}')
-                    keyboard.add(link_button)
+                    link_button = types.InlineKeyboardButton(text=product[2], url=product[0])
+                    delete_button = types.InlineKeyboardButton(text="✖️", callback_data="delete_message")
+                    keyboard.add(link_button, delete_button)
                     bot.send_message(message.chat.id, text=f"\n{product[1]}", reply_markup=keyboard)
                     search.search_results.append(product)
             sleep_animation(message=search.global_mess, duration=60)
@@ -96,6 +96,8 @@ def inline(c):
             bot.edit_message_text(chat_id=c.message.chat.id, text="Что хотите сделать, Александр?",
                                   message_id=c.message.message_id,
                                   reply_markup=main_menu_buttons())
+        elif c.data == 'delete_message':
+            bot.delete_message(chat_id=c.message.chat.id, message_id=c.message.message_id)
     except Exception as e:
         bot.send_message(c.message.chat.id, text=f"Ошибка:{e}")
 
