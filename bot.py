@@ -17,6 +17,8 @@ def inline(message):
 def sleep_animation(message, duration, text):
     prog = "◽"
     for i in range(duration):
+        if not search.is_searching:
+            break
         if len(prog) > 3:
             prog = "◽"
         else:
@@ -27,9 +29,12 @@ def sleep_animation(message, duration, text):
 
 
 def search_on_baraholka(message):
+    search.is_searching = True
     search_results = []
     try:
         while True:
+            if not search.is_searching:
+                break
             res = search.search(message.text)
             for product in res:
                 print(f'product:{product}')
@@ -51,7 +56,7 @@ def main_menu_buttons():
     but_1 = types.InlineKeyboardButton(text="Виза", callback_data="visa")
     but_2 = types.InlineKeyboardButton(text="Поезда", callback_data="trains")
     but_3 = types.InlineKeyboardButton(text="Поиск", callback_data="search")
-    but_4 = types.InlineKeyboardButton(text="Стоп", callback_data="stop_bot")
+    but_4 = types.InlineKeyboardButton(text="Стоп", callback_data="stop_monitor")
     key.add(but_1, but_2, but_3, but_4)
     return key
 
@@ -64,7 +69,7 @@ def inline(c):
                 screenshot = visa.monitor()
                 if not screenshot:
                     visa.IS_MONITORING = True
-                    sleep_animation(message=c.message, duration=3600)
+                    sleep_animation(message=c.message, duration=3600, text="Мониторим визы")
                 else:
                     visa.IS_MONITORING = False
                     keyboard = types.InlineKeyboardMarkup()
@@ -99,9 +104,8 @@ def inline(c):
                                   reply_markup=main_menu_buttons())
         elif c.data == 'delete_message':
             bot.delete_message(chat_id=c.message.chat.id, message_id=c.message.message_id)
-        elif c.data == 'stop_bot':
-            bot.edit_message_text("Останавливаю бота",chat_id=c.message.chat.id, message_id=c.message.message_id, reply_markup=main_menu_buttons())
-            bot.stop_bot()
+        elif c.data == 'stop_monitor':
+            search.is_searching = False
     except Exception as e:
         bot.send_message(c.message.chat.id, text=f"Ошибка:{e}")
 

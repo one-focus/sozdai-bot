@@ -3,6 +3,7 @@ import requests
 from lxml import html
 
 global_mess = None
+is_searching = True
 
 
 def search(query):
