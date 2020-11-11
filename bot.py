@@ -60,7 +60,7 @@ def inline(c):
         if c.data == 'visa' and visa.IS_MONITORING == False:
             while True:
                 screenshot = visa.monitor()
-                if screenshot:
+                if not screenshot:
                     keyboard = types.InlineKeyboardMarkup()
                     link_button = types.InlineKeyboardButton(text="Открыть сайт", url=visa.URL)
                     keyboard.add(link_button)
