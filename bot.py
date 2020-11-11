@@ -14,14 +14,14 @@ def inline(message):
     bot.send_message(message.chat.id, text="Что хотите сделать, Александр?", reply_markup=main_menu_buttons())
 
 
-def sleep_animation(message, duration):
+def sleep_animation(message, duration, text):
     prog = "◽"
     for i in range(duration):
         if len(prog) > 3:
             prog = "◽"
         else:
             prog = f"{prog}◽"
-        bot.edit_message_text(chat_id=message.chat.id, text=f'Мониторим {message.text}:\n{prog}',
+        bot.edit_message_text(chat_id=message.chat.id, text=f'Мониторим {text}:\n{prog}',
                               message_id=message.message_id)
         time.sleep(1)
 
@@ -41,7 +41,7 @@ def search_on_baraholka(message):
                     keyboard.add(link_button, delete_button)
                     bot.send_message(message.chat.id, text=f"\n{product[1]}", reply_markup=keyboard)
                     search_results.append(product)
-            sleep_animation(message=search.global_mess, duration=60)
+            sleep_animation(message=search.global_mess, duration=60, text=message.text)
     except Exception as e:
         bot.send_message(message.chat.id, text=f"Ошибка:{e}")
 
