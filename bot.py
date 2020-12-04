@@ -59,13 +59,10 @@ def inline(c):
     try:
         if c.data == 'visa':
             while True:
-                screenshot = visa.monitor()
-                if screenshot:
-                    keyboard = types.InlineKeyboardMarkup()
-                    link_button = types.InlineKeyboardButton(text="Открыть сайт", url=visa.URL)
-                    keyboard.add(link_button)
-                    bot.send_photo(c.message.chat.id, visa.send_screenshot(), reply_markup=keyboard)
-                sleep_animation(message=c.message, duration=60, text="визы")
+                dates = visa.get_dates()
+                if dates:
+                    bot.send_message(c.message.chat.id, dates)
+                sleep_animation(message=c.message, duration=3600, text="визы")
                     #
             # visa.IS_MONITORING = False
             #     keyboard = types.InlineKeyboardMarkup()
