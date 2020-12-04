@@ -46,18 +46,16 @@ def get_dates():
     driver.switch_to.window(driver.window_handles[-1])
     print('5')
     time.sleep(1)
-    print('6')
-    WebDriverWait(driver, 10).until(
-        EC.visibility_of_element_located((By.XPATH, '//img[@class="clsBktWidgetDefaultLoading"]')))
     print('7')
     WebDriverWait(driver, 60).until(
         EC.invisibility_of_element_located((By.XPATH, '//img[@class="clsBktWidgetDefaultLoading"]')))
+    print('7')
+    WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.ID, 'bktContinue'))).click()
     print('8')
-    driver.find_element_by_id("bktContinue").click()
-    print('9')
     time.sleep(3)
-    print('10')
+    print('9')
     driver.find_element_by_xpath("//a[contains(@href, 'bkt550308')]").click()
+    print('10')
     time.sleep(5)
     print('11')
     WebDriverWait(driver, 60).until(

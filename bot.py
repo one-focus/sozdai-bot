@@ -101,7 +101,7 @@ def inline(c):
         elif c.data == 'stop_monitor':
             search.is_searching = False
     except Exception as e:
-        bot.send_message(c.message.chat.id, text=f"Ошибка:{e}")
+        bot.send_message(c.message.chat.id, text=f"Ошибка:{str(e)}")
 
 
 if __name__ == '__main__':
