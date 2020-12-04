@@ -46,7 +46,7 @@ def get_dates():
     driver.switch_to.window(driver.window_handles[-1])
     print('5')
     time.sleep(1)
-    print('7')
+    print('6')
     WebDriverWait(driver, 60).until(
         EC.invisibility_of_element_located((By.XPATH, '//img[@class="clsBktWidgetDefaultLoading"]')))
     print('7')
