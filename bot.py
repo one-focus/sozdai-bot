@@ -16,9 +16,9 @@ def inline(message):
 
 def sleep_animation(message, duration, text):
     for i in range(duration):
-        bot.edit_message_text(chat_id=message.chat.id, text=f'Мониторим {text}: {duration - i}',
+        bot.edit_message_text(chat_id=message.chat.id, text=f'Мониторим {text}: повтор через {duration - i} минут',
                               message_id=message.message_id)
-        time.sleep(1)
+        time.sleep(60)
 
 
 def search_on_baraholka(message):
@@ -62,7 +62,7 @@ def inline(c):
                 dates = visa.get_dates()
                 if dates:
                     bot.send_message(c.message.chat.id, dates)
-                sleep_animation(message=c.message, duration=3600, text="визы")
+                sleep_animation(message=c.message, duration=60, text="визы")
                     #
             # visa.IS_MONITORING = False
             #     keyboard = types.InlineKeyboardMarkup()
