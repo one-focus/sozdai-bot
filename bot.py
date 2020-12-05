@@ -63,7 +63,7 @@ def inline(c):
                 if dates:
                     bot.send_message(c.message.chat.id, dates)
                 sleep_animation(message=c.message, duration=60, text="визы")
-                    #
+                #
             # visa.IS_MONITORING = False
             #     keyboard = types.InlineKeyboardMarkup()
             #     link_button = types.InlineKeyboardButton(text="Сайт", url=visa.URL)
