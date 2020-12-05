@@ -70,7 +70,7 @@ def get_dates():
     dates = []
     if len(elements):
         for element in elements:
-            if element.get_attribute("title") not in ('', 'CLOSED', 'NOT AVAILABLE'):
-                dates.append(f'{element.text}:{element.get_attribute("title")}')
+            # if element.get_attribute("title") not in ('', 'CLOSED', 'NOT AVAILABLE'):
+            dates.append(f'{element.text}:{element.get_attribute("title")}')
     driver.quit()
     return dates
