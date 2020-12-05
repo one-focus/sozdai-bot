@@ -59,8 +59,9 @@ def inline(c):
     try:
         if c.data == 'visa':
             while True:
-                dates = visa.get_dates()
+                dates, screen = visa.get_dates()
                 bot.send_message(c.message.chat.id, dates)
+                bot.send_photo(c.message.chat.id, screen)
                 sleep_animation(message=c.message, duration=10, text="визы")
                 #
             # visa.IS_MONITORING = False
