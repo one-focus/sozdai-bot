@@ -62,7 +62,7 @@ def inline(c):
                 dates, screen = visa.get_dates()
                 bot.send_message(c.message.chat.id, dates)
                 bot.send_photo(c.message.chat.id, screen)
-                sleep_animation(message=c.message, duration=10, text="визы")
+                sleep_animation(message=c.message, duration=30, text="визы")
                 #
             # visa.IS_MONITORING = False
             #     keyboard = types.InlineKeyboardMarkup()
