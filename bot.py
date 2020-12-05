@@ -16,7 +16,7 @@ def inline(message):
 
 def sleep_animation(message, duration, text):
     for i in range(duration):
-        bot.edit_message_text(chat_id=message.chat.id, text=f'Мониторим {text}: повтор через {duration - i} минут',
+        bot.edit_message_text(chat_id=message.chat.id, text=f'Мониторим {text}: повтор через {duration - i} мин',
                               message_id=message.message_id)
         time.sleep(60)
 
