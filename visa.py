@@ -71,8 +71,8 @@ def get_dates():
     dates = []
     if len(elements):
         for element in elements:
-            # if element.get_attribute("title") not in ('', 'CLOSED', 'NOT AVAILABLE'):
-            dates.append(f'{element.text}:{element.get_attribute("title")}')
+            if element.get_attribute("title") not in ('', 'CLOSED'):
+                dates.append(f'{element.text}:{element.get_attribute("title")}')
     screen = driver.get_screenshot_as_png()
     driver.quit()
     return dates, screen
