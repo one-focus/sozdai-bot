@@ -66,6 +66,7 @@ def get_dates():
     print('13')
     time.sleep(3)
     elements = driver.find_elements_by_xpath("//table[@class='ui-datepicker-calendar']//td")
+    print(driver.page_source)
     print('14')
     time.sleep(3)
     dates = []
