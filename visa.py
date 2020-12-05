@@ -66,7 +66,6 @@ def get_dates():
     print('13')
     time.sleep(3)
     elements = driver.find_elements_by_xpath("//table[@class='ui-datepicker-calendar']//td")
-    print(driver.page_source)
     print('14')
     time.sleep(3)
     dates = []
@@ -75,5 +74,6 @@ def get_dates():
             # if element.get_attribute("title") not in ('', 'CLOSED', 'NOT AVAILABLE'):
             dates.append(f'{element.text}:{element.get_attribute("title")}')
     screen = driver.get_screenshot_as_png()
+    print(dates)
     driver.quit()
     return dates, screen
