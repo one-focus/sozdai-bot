@@ -41,7 +41,7 @@ def search_on_baraholka(message):
                     search_results.append(product)
             sleep_animation(message=search.global_mess, duration=1, text=message.text)
     except Exception as e:
-        bot.send_message(message.chat.id, text=f"Ошибка:{e}")
+        bot.send_message(message.chat.id, text=f"Ошибка:{str(e)}")
 
 
 def main_menu_buttons():
